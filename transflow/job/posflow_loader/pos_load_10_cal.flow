@@ -1,0 +1,5 @@
+nodes:
+  - name: pos_load_10_cal
+    type: command
+    config:
+      command: su hdfs -c 'spark-submit  branch_info.py'

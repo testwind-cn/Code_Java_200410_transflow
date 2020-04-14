@@ -1,0 +1,19 @@
+nodes:
+  - name: pos_load_test
+    type: command
+    config:
+      command: sh /home/transflow/script_v2/main_001_03.sh
+    dependsOn:
+      - pos_load_test_b
+
+  - name: pos_load_test_b
+    type: command
+    config:
+      command: sh /home/transflow/script_v2/main_001_02.sh
+    dependsOn:
+      - pos_load_test_a
+
+  - name: pos_load_test_a
+    type: command
+    config:
+      command: sh /home/transflow/script_v2/main_001_01.sh

@@ -1,0 +1,5 @@
+nodes:
+  - name: pos_load_syb
+    type: command
+    config:
+      command: ssh 10.91.1.19  "/app/code/posflow_loader/ftpcmd.sh"

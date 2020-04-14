@@ -1,0 +1,19 @@
+nodes:
+  - name: pos_load_1
+    type: command
+    config:
+      command: sudo -u admin sh ./main_02.sh
+    dependsOn:
+      - pos_load_1_b
+
+  - name: pos_load_1_b
+    type: command
+    config:
+      command: ssh 10.91.1.19  "/app/code/venv/venv1_hive/bin/python3 /app/code/posflow_loader_2/main1_new.py 2"
+    dependsOn:
+      - pos_load_1_a
+
+  - name: pos_load_1_a
+    type: command
+    config:
+      command: ssh 10.91.1.19  "/app/code/posflow_loader/ftpcmd.sh"

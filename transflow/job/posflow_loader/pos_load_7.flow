@@ -1,0 +1,5 @@
+nodes:
+  - name: pos_load_7
+    type: command
+    config:
+      command: ssh 10.91.1.19  "/app/code/venv/venv1_hive/bin/python3 /app/code/posflow_loader_2/main3_new.py 7"

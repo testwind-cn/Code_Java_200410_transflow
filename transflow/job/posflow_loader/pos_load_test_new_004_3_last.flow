@@ -1,0 +1,5 @@
+nodes:
+  - name: pos_load_test_new_004_3_last
+    type: command
+    config:
+      command: sh /home/transflow/script_v2/main_004_03_last.sh
