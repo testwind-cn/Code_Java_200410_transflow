@@ -1,11 +1,15 @@
 #!/bin/bash
 
 OLDDIR=$(pwd)
-echo "===================   $0 原始目录  ${OLDDIR}   =============="
-THEDIR="$(dirname $0)/"
+THEDIR="$(dirname ${0})/"
 cd ${THEDIR}
 THEDIR=$(pwd)
-echo "===================   当前目录  ${THEDIR}"
+echo "====信息1 SHELL 文件：${0}  ===="
+echo "====信息2 原始目录：${OLDDIR}  ===="
+echo "====信息3 当前目录：${THEDIR} ===="
+echo "====信息4 $(date "+%Y-%m-%d %H:%M:%S") ===="
+
+
 DATE_L=$(date "+%Y-%m-%d %H:%M:%S")
 
 
@@ -54,11 +58,11 @@ sudo -u admin spark-submit \
     --conf "spark.driver.extraJavaOptions=-Dlog4j.configuration=file:log4j-driver.properties" \
     --class ${pkg_service}.${BLFile} \
     --master yarn-client \
-    --num-executors $NUM_EXE \
-    --executor-cores $EXE_CORE \
-    --executor-memory $EXE_MEM \
+    --num-executors ${NUM_EXE} \
+    --executor-cores ${EXE_CORE} \
+    --executor-memory ${EXE_MEM} \
     --name "${BLFile}" \
-    $jar_transflow \
+    ${jar_transflow} \
     "${START_DAY}" "${END_DAY}" "${SQL_F}"
 
 

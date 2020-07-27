@@ -7,11 +7,15 @@
 
 
 OLDDIR=$(pwd)
-echo "===================   $0 原始目录  ${OLDDIR}   =============="
-THEDIR="$(dirname $0)/"
+THEDIR="$(dirname ${0})/"
 cd ${THEDIR}
 THEDIR=$(pwd)
-echo "===================   当前目录  ${THEDIR}"
+echo "====信息1 SHELL 文件：${0}  ===="
+echo "====信息2 原始目录：${OLDDIR}  ===="
+echo "====信息3 当前目录：${THEDIR} ===="
+echo "====信息4 $(date "+%Y-%m-%d %H:%M:%S") ===="
+
+
 DATE_L=$(date "+%Y-%m-%d %H:%M:%S")
 
 echo "当天时间："${DATE_L}
@@ -54,13 +58,13 @@ echo "====== 运行 Spark File ${START_DAY}  ${END_DAY}  ${1}"
 # --conf "spark.yarn.executor.memoryOverhead=4096" \
 sudo -u admin spark-submit \
     --conf "spark.driver.extraJavaOptions=-Dlog4j.configuration=file:log4j-driver.properties" \
-    --class $pkg_service.$obj_BLTransFlowOpt_v2 \
+    --class ${pkg_service}.${obj_BLTransFlowOpt_v2} \
     --master yarn-client \
-    --num-executors $NUM_EXE \
-    --executor-cores $EXE_CORE \
-    --executor-memory $EXE_MEM \
+    --num-executors ${NUM_EXE} \
+    --executor-cores ${EXE_CORE} \
+    --executor-memory ${EXE_MEM} \
     --name "$obj_BLTransFlowOpt_v2" \
-    $jar_transflow "${2}" "${3}"
+    ${jar_transflow} "${2}" "${3}"
 
 #    --conf "spark.driver.extraJavaOptions=-Dlog4j.configuration=log4j-driver.properties" \
 #    --files ./log4j-driver.properties,./log4j-executor.properties \

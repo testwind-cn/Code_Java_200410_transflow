@@ -19,24 +19,23 @@ echo "参数2 ${2}"
 echo "参数3 ${3}"
 
 
-
 if [[ -z "${1}" ]]
 then
-    SQL_F="./002_dml_spark_insert_bl_flow_by_day_01.sql"
+    SQL_F="./005_dml_spark_insert_bl_flow_by_week_01.sql"
 else
     SQL_F="${1}"
 fi
 
 if [[ -z "${2}" ]]
 then
-    START_DAY=$(date -d "-10 day" "+%Y-%m-%d")
+    START_DAY=$(date -d "-21 day" "+%Y-%m-%d")
 else
     START_DAY=${2}
 fi
 
 if [[ -z "${3}" ]]
 then
-    END_DAY=$(date -d "+2 day" "+%Y-%m-%d")
+    END_DAY=$(date -d "+0 day" "+%Y-%m-%d")
 else
     END_DAY=${3}
 fi
@@ -48,7 +47,7 @@ source /root/.bash_profile
 # spark-submit 配置
 NUM_EXE=8
 EXE_CORE=6
-EXE_MEM="24G"
+EXE_MEM="16G"
 jar_transflow=/home/transflow/transflow-2.0-jar-with-distribution.jar
 pkg_service="com.thtk.service"
 BLFile="BLFile"

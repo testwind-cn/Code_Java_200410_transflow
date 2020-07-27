@@ -4,7 +4,11 @@ OLDDIR=$(pwd)
 THEDIR="$(dirname ${0})/"
 cd ${THEDIR}
 THEDIR=$(pwd)
-echo "原始目录：${OLDDIR}  ==== 当前目录：  ${THEDIR}"
+echo "====信息1 SHELL 文件：${0}  ===="
+echo "====信息2 原始目录：${OLDDIR}  ===="
+echo "====信息3 当前目录：${THEDIR} ===="
+echo "====信息4 $(date "+%Y-%m-%d %H:%M:%S") ===="
+
 
 sh /home/transflow/script_v2/run_file.sh "main_001_02.sh" "nofile"
 

@@ -5,6 +5,7 @@ import com.thtk.constant.ConfigTable
 import com.thtk.service.BLTransFlowServiceOpt_v2.{get_agt_condition, get_syb_condition}
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.sql.hive.HiveContext
+import org.apache.log4j._
 
 object BLFile {
 
@@ -16,6 +17,8 @@ object BLFile {
     var sql_file:String = if ( args.length > 2 ) args(2) else null
 
     println("############# BL_File 参数个数: %d , 参数1: %s ,参数2: %s ,参数3: %s ".format(args.length,start,end,sql_file))
+
+    Logger.getLogger("org.apache.spark.SparkContext").setLevel(Level.WARN)
 
     // 首先还是创建SparkConf
     val conf = new SparkConf().setAppName("BL_File 参数1: %s ,参数2: %s ,参数3: %s".format(start,end,sql_file))
@@ -34,7 +37,7 @@ object BLFile {
         println("############# 找不到文件####  替换为 ： /sql/ConstOpt_v2/".concat(sql_file))
         sql_cmd = loader.getString("/sql/ConstOpt_v2/".concat(sql_file)  ,start,end )
       } else {
-        println("############# 找到文件####  为 ： ".concat(sql_file))
+        println("############# 找到文件####  为 ： \n".concat(sql_file))
       }
 
       if (sql_cmd == null || sql_cmd.length <= 0 ) {

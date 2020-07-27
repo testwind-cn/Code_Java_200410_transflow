@@ -2,6 +2,9 @@ DROP TABLE IF EXISTS `deprecated_db.bl_flow_by_week_01`;
 
 CREATE TABLE IF NOT EXISTS `deprecated_db.bl_flow_by_week_01`(
     mcht_cd                     string
+    ,agt_type                   string
+    ,product_name1              string
+    ,product_name2              string
 
     ,flow_amt_sell              bigint
     ,flow_vol_sell              int

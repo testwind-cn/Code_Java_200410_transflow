@@ -1,0 +1,33 @@
+drop table if exists dm_unify.merchant_rd_flow_v2;
+
+create table dm_unify.merchant_rd_flow_v2(
+merchant_ap string comment '商户号',
+agt_type  int comment '直连商户标识',
+pos_amttxn_l1m decimal(13,2) comment '过去30天交易总额',
+pos_amttxn_l2m decimal(13,2) comment '过去60天交易总额',
+pos_amttxn_l3m decimal(13,2) comment '过去90天交易总额',
+pos_amttxn_l6m decimal(13,2) comment '过去180天交易总额',
+pos_amttxn_l12m decimal(13,2) comment '过去360天交易总额',
+pos_monthtxn_l3m int comment '过去90天有交易的月份数',
+pos_monthtxn_l6m int comment '过去180天有交易的月份数',
+pos_monthtxn_l12m int comment '过去360天有交易的月份数',
+pos_weektxn_l4w int comment '过去4周有交易的周数',
+pos_weektxn_l8w int comment '过去8周有交易的周数',
+pos_daytxn_l30d int comment '过去30天有交易的天数',
+pos_mon_sin_nop_l12m int comment '上次月度无交易距今月份数',
+pos_cnti_incr_l6m int comment '过去180天交易连续增长月份数',
+pos_cnti_incr_l12m int comment '过去360天交易连续增长月份数',
+pos_cnti_decr_l6m int comment '过去180天交易连续降低月份数',
+pos_cnti_decr_l12m int comment '过去360天交易连续降低月份数',
+pos_incr_rte_l2m decimal(13,2) comment '过去60天交易月周期增长率',
+pos_incr_rte_l6m decimal(13,2) comment '过去180天交易月周期增长率',
+pos_incr_rte_l12m decimal(13,2) comment '过去360天交易月周期增长率',
+pos_ave_pur_l3m decimal(13,2) comment '过去90天平均交易金额',
+pos_ave_pur_l6m decimal(13,2) comment '过去180天平均交易金额',
+pos_ave_pur_l12m decimal(13,2) comment '过去360天平均交易金额',
+`is_delete` int COMMENT '逻辑删除，1.是，0.否',
+-- `create_time` string  COMMENT '创建日期',
+`create_user` string COMMENT '创建人',
+`modify_time` string  COMMENT '修改日期',
+`modify_user` string COMMENT '修改人'
+) COMMENT '【统一流程】乐融流水表' partitioned by (create_time string)  stored AS orc;

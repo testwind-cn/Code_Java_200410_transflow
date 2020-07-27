@@ -4,7 +4,11 @@ OLDDIR=$(pwd)
 THEDIR="$(dirname ${0})/"
 cd ${THEDIR}
 THEDIR=$(pwd)
-echo "原始目录：${OLDDIR}  ==== 当前目录：  ${THEDIR}"
+echo "====信息1 SHELL 文件：${0}  ===="
+echo "====信息2 原始目录：${OLDDIR}  ===="
+echo "====信息3 当前目录：${THEDIR} ===="
+echo "====信息4 $(date "+%Y-%m-%d %H:%M:%S") ===="
+
 
 DATE_S=$(date "+%Y-%m-%d %H:%M:%S")
 echo "===========    开始时间：${DATE_S}    ==========="
@@ -66,31 +70,49 @@ else
     exit -4
 fi
 
-
-if [[ -z "${4}" ]]
+# 不是单次模式，是循环模式，必须给前后日期
+if [[ ( ${ONE_LOOP} -ne 1 ) && ( -z "${4}" || -z "${5}" ) ]]
 then
-    START_DAY=$(date -d "-10 day" "+%Y-%m-%d")
-    ONE_LOOP=1
-else
-    START_DAY=${4}
+    cd ${OLDDIR}
+    echo "===========    日期格式不对：-4"
+    exit -4
 fi
 
-if [[ -z "${5}" ]]
+#if [[ -z "${4}" ]]
+#then
+#    START_DAY=$(date -d "-10 day" "+%Y-%m-%d")
+#    ONE_LOOP=1
+#else
+#    START_DAY=${4}
+#fi
+START_DAY=${4}
+
+#if [[ -z "${5}" ]]
+#then
+#    END_DAY=$(date -d "+2 day" "+%Y-%m-%d")
+#else
+#    END_DAY=${5}
+#fi
+END_DAY=${5}
+
+res1=0
+if [[ -n "${START_DAY}" ]]
 then
-    END_DAY=$(date -d "+2 day" "+%Y-%m-%d")
-else
-    END_DAY=${5}
+    START_DAY=$(date -d "${START_DAY}" "+%Y-%m-%d")
+    res1=${?}
 fi
 
+res2=0
+if [[ -n "${END_DAY}" ]]
+then
+    END_DAY=$(date -d "${END_DAY}" "+%Y-%m-%d")
+    res2=${?}
+fi
 
-START_DAY=$(date -d "${START_DAY}" "+%Y-%m-%d")
-res1=${?}
-END_DAY=$(date -d "${END_DAY}" "+%Y-%m-%d")
-res2=${?}
 if [[ ${res1} -ne 0 || ${res2} -ne 0 ]]
 then
     cd ${OLDDIR}
-    echo "===========    日期格式不对："
+    echo "===========    日期格式不对：-5"
     exit -5
 fi
 
@@ -109,7 +131,7 @@ else
     for ((i=0;;i++))
     do
         DATE_L1=$(date -d "${START_DAY} +${i} ${STEP}" "+%Y-%m-%d")
-        DATE_L2=$(date -d "${START_DAY} +`expr ${i} + 1` ${STEP}" "+%Y-%m-%d")
+        DATE_L2=$(date -d "${START_DAY} +$(expr ${i} + 1) ${STEP}" "+%Y-%m-%d")
 
         if [[ "$(date -d "${DATE_L1}" "+%s")" -ge "$(date -d "${END_DAY}" "+%s")" ]]
         then

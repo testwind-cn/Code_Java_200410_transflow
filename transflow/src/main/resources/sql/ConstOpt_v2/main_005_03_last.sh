@@ -3,15 +3,15 @@
 
 DATE_CURRENT=$(date -d "+1 day" "+%Y-%m-%d")
 
-for ((i=0;i<31;i++))
+for ((i=0;i<8;i++))
 do
-    DATE_L1=$(date -d "${DATE_CURRENT} -`expr ${i} + 90` day" "+%Y-%m-%d")
+    DATE_L1=$(date -d "${DATE_CURRENT} -`expr ${i} + 70` day" "+%Y-%m-%d")
     DATE_L2=$(date -d "${DATE_CURRENT} -`expr ${i}` day" "+%Y-%m-%d")
 
 echo "处理日期 ${i} sh \"${DATE_L1}\" \"${DATE_L2}\"    ***********************"
 
-    sh /home/transflow/script_v2/run_file.sh "main_004_03.sh" \
-        "004_dml_hive_insert_bl_flow_by_30day.sql" "one" \
+    sh /home/transflow/script_v2/run_file.sh "main_005_03.sh" \
+        "005_dml_hive_insert_bl_flow_by_week.sql" "one" \
         "${DATE_L1}" "${DATE_L2}"
 
 done

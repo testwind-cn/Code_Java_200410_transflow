@@ -4,6 +4,48 @@ nodes:
     config:
       command: echo "OK"
     dependsOn:
+      - pos_load_daily_aggr_008_02
+
+  - name: pos_load_daily_aggr_008_02
+    type: command
+    config:
+      command: sh /home/transflow/script_v2/run_file.sh "main_008_02.sh" "008_dml_spark_merchantRdFlow_v2.sql"
+    dependsOn:
+      - pos_load_daily_aggr_007_02
+
+  - name: pos_load_daily_aggr_007_02
+    type: command
+    config:
+      command: sh /home/transflow/script_v2/run_file.sh "main_007_02.sh" "007_dml_spark_insert_bl_flow_indicator.sql"
+    dependsOn:
+      - pos_load_daily_aggr_005_03_a
+
+  - name: pos_load_daily_aggr_005_03_a
+    type: command
+    config:
+      command: sh /home/transflow/script_v2/run_file.sh "main_005_03_a.sh" "005_dml_hive_insert_bl_flow_by_week.sql"
+    dependsOn:
+      - pos_load_daily_aggr_005_02_a
+
+  - name: pos_load_daily_aggr_005_02_a
+    type: command
+    config:
+      command: sh /home/transflow/script_v2/run_file.sh "main_005_02_a.sh" "005_dml_spark_insert_bl_flow_by_week_01.sql"
+    dependsOn:
+      - pos_load_daily_aggr_005_03
+
+  - name: pos_load_daily_aggr_005_03
+    type: command
+    config:
+      command: sh /home/transflow/script_v2/run_file.sh "main_005_03.sh" "005_dml_hive_insert_bl_flow_by_week.sql"
+    dependsOn:
+      - pos_load_daily_aggr_005_02
+
+  - name: pos_load_daily_aggr_005_02
+    type: command
+    config:
+      command: sh /home/transflow/script_v2/run_file.sh "main_005_02.sh" "005_dml_spark_insert_bl_flow_by_week_01.sql"
+    dependsOn:
       - pos_load_daily_aggr_004_03
 
   - name: pos_load_daily_aggr_004_03
@@ -18,7 +60,7 @@ nodes:
     config:
       command: sh /home/transflow/script_v2/run_file.sh "main_004_02.sh" "004_dml_spark_insert_bl_flow_by_30day_01.sql"
     dependsOn:
-      - pos_load_daily_aggr_003_02
+      - pos_load_daily_aggr_003_03
 
   - name: pos_load_daily_aggr_003_03
     type: command
@@ -32,7 +74,7 @@ nodes:
     config:
       command: sh /home/transflow/script_v2/run_file.sh "main_003_02.sh" "003_dml_spark_insert_bl_flow_by_month_01.sql"
     dependsOn:
-      - pos_load_daily_aggr_002_02
+      - pos_load_daily_aggr_002_03
 
   - name: pos_load_daily_aggr_002_03
     type: command
@@ -46,7 +88,7 @@ nodes:
     config:
       command: sh /home/transflow/script_v2/run_file.sh "main_002_02.sh" "002_dml_spark_insert_bl_flow_by_day_01.sql"
     dependsOn:
-      - pos_load_daily_aggr_001_02
+      - pos_load_daily_aggr_001_03
 
   - name: pos_load_daily_aggr_001_03
     type: command

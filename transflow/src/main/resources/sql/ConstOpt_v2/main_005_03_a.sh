@@ -20,7 +20,7 @@ echo "参数3 ${3}"
 
 if [[ -z "${1}" ]]
 then
-    SQL_F="./004_dml_hive_insert_bl_flow_by_30day.sql"
+    SQL_F="./005_dml_hive_insert_bl_flow_by_week.sql"
 else
     SQL_F="${1}"
 fi
@@ -28,14 +28,14 @@ fi
 
 if [[ -z "${2}" ]]
 then
-    START_DAY=$(date -d "-90 day" "+%Y-%m-%d")
+    START_DAY=$(date -d "-20 day" "+%Y-%m-%d")
 else
     START_DAY=${2}
 fi
 
 if [[ -z "${3}" ]]
 then
-    END_DAY=$(date -d "+0 day" "+%Y-%m-%d")
+    END_DAY=$(date -d "+1 day" "+%Y-%m-%d")
 else
     END_DAY=${3}
 fi
