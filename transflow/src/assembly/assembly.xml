@@ -47,6 +47,7 @@
       <useProjectArtifact>false</useProjectArtifact>
       <includes>
         <include>com.plj.tools:plj-tools-java</include>
+<!--        <include>com.plj.hive:Hive_UDAF</include>-->
       </includes>
 
       <outputDirectory>/</outputDirectory>

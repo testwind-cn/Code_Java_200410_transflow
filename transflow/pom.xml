@@ -30,6 +30,13 @@
             <scope>compile</scope>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>com.plj.hive</groupId>-->
+<!--            <artifactId>Hive_UDAF</artifactId>-->
+<!--            <version>1.0-SNAPSHOT</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
+
         <!--scala lib 包-->
         <dependency>
             <groupId>org.scala-lang</groupId>
