@@ -1,6 +1,9 @@
-DROP TABLE IF EXISTS `deprecated_db.bl_total_transflow_v2_01`;
+SET hivevar:MAIN_DB=rds_posflow;
+SET hivevar:TEMP_DB=deprecated_db;
 
-CREATE TABLE IF NOT EXISTS `deprecated_db.bl_total_transflow_v2_01`(
+DROP TABLE IF EXISTS `${hivevar:TEMP_DB}.bl_total_transflow_v2_01`;
+
+CREATE TABLE IF NOT EXISTS `${hivevar:TEMP_DB}.bl_total_transflow_v2_01`(
   `sn` string COMMENT '',
   `inst_time` string COMMENT '',
   `settle_date` date COMMENT '',
@@ -31,7 +34,7 @@ PARTITIONED BY
 )
 STORED AS ORC;
 
-CREATE TABLE IF NOT EXISTS `rds_posflow.bl_total_transflow_v2`(
+CREATE TABLE IF NOT EXISTS `${hivevar:MAIN_DB}.bl_total_transflow_v2`(
   `sn` string COMMENT '',
   `inst_time` int COMMENT '',
   `settle_date` date COMMENT '',

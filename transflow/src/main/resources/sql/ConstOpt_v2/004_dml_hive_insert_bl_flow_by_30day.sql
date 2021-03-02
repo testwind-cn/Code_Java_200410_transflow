@@ -1,3 +1,6 @@
+SET hivevar:MAIN_DB=rds_posflow;
+SET hivevar:TEMP_DB=deprecated_db;
+
 set mapreduce.map.memory.mb=4096;
 set mapreduce.reduce.memory.mb=4096;
 SET hive.exec.dynamic.partition=true;
@@ -16,7 +19,7 @@ set mapred.max.split.size=1024000000;
 set mapred.min.split.size.per.node=768000000;
 set mapred.min.split.size.per.rack=768000000;
 
-INSERT OVERWRITE TABLE rds_posflow.bl_flow_by_30day
+INSERT OVERWRITE TABLE ${hivevar:MAIN_DB}.bl_flow_by_30day
     PARTITION (p_day,inst_date)
 SELECT
     mcht_cd
@@ -119,7 +122,7 @@ SELECT
     ,p_day
     ,inst_date
 from
-    deprecated_db.bl_flow_by_30day_01
+    ${hivevar:TEMP_DB}.bl_flow_by_30day_01
 WHERE
     p_day = datediff('${2}','2000-01-02') % 30 and
     inst_date <  date_sub('${2}', 0) AND

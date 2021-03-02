@@ -1,3 +1,6 @@
+SET hivevar:MAIN_DB=rds_posflow;
+SET hivevar:TEMP_DB=deprecated_db;
+
 set mapreduce.map.memory.mb=4096;
 set mapreduce.reduce.memory.mb=4096;
 SET hive.exec.dynamic.partition=true;
@@ -16,7 +19,7 @@ set mapred.max.split.size=1024000000;
 set mapred.min.split.size.per.node=768000000;
 set mapred.min.split.size.per.rack=768000000;
 
-INSERT OVERWRITE TABLE rds_posflow.bl_flow_by_month
+INSERT OVERWRITE TABLE ${hivevar:MAIN_DB}.bl_flow_by_month
     PARTITION (inst_date)
 SELECT
     mcht_cd
@@ -150,7 +153,7 @@ SELECT
 
     ,inst_date
 from
-    deprecated_db.bl_flow_by_month_01
+    ${hivevar:TEMP_DB}.bl_flow_by_month_01
 WHERE
     inst_date >= to_date(date_format('${1}','yyyy-MM-01')) and
     inst_date <  to_date(date_format(date_add(to_date(date_format(date_sub('${2}',1),'yyyy-MM-01')),35),'yyyy-MM-01'))

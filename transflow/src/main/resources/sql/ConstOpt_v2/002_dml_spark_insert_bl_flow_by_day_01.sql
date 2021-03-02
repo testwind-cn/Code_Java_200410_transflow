@@ -1,4 +1,7 @@
-INSERT OVERWRITE TABLE deprecated_db.bl_flow_by_day_01
+SET hivevar:MAIN_DB=rds_posflow;
+SET hivevar:TEMP_DB=deprecated_db;
+
+INSERT OVERWRITE TABLE ${hivevar:TEMP_DB}.bl_flow_by_day_01
     PARTITION (inst_date)
 SELECT
     mcht_cd
@@ -95,7 +98,7 @@ SELECT
 
     ,inst_date
 from
-    rds_posflow.bl_total_transflow_v2
+    ${hivevar:MAIN_DB}.bl_total_transflow_v2
 WHERE
     (inst_date >= '${1}' and inst_date < '${2}' ) and
     txn_status = '处理成功' and ( txn_amt > 0 or txn_type = '3081' )

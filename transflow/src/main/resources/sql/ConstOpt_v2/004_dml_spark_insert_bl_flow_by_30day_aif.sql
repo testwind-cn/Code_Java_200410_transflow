@@ -1,4 +1,7 @@
-INSERT OVERWRITE TABLE deprecated_db.bl_flow_by_30day_01
+SET hivevar:MAIN_DB=rds_posflow;
+SET hivevar:TEMP_DB=deprecated_db;
+
+INSERT OVERWRITE TABLE ${hivevar:TEMP_DB}.bl_flow_by_30day_01
     PARTITION (p_day, inst_date)
 select
     mcht_cd
@@ -212,7 +215,7 @@ from
             WHEN inst_date >= date_sub(current_date(),330) AND inst_date < date_sub(current_date(),300) THEN date_sub(current_date(),330)
             WHEN inst_date >= date_sub(current_date(),360) AND inst_date < date_sub(current_date(),330) THEN date_sub(current_date(),360)
         END AS p_inst_date
-    from rds_posflow.bl_flow_by_day
+    from ${hivevar:MAIN_DB}.bl_flow_by_day
     where
         inst_date >= date_sub(current_date(),360) AND inst_date < date_sub(current_date(),  0)
 ) t1

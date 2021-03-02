@@ -1,6 +1,9 @@
--- DROP TABLE IF EXISTS `rds_posflow.bl_flow_indicator`;
+SET hivevar:MAIN_DB=rds_posflow;
+SET hivevar:TEMP_DB=deprecated_db;
 
-CREATE TABLE IF NOT EXISTS `rds_posflow.bl_flow_indicator`(
+-- DROP TABLE IF EXISTS `${hivevar:MAIN_DB}.bl_flow_indicator`;
+
+CREATE TABLE IF NOT EXISTS `${hivevar:MAIN_DB}.bl_flow_indicator`(
     mcht_cd                     string
     ,agt_type                   string
     ,product_name1              string
@@ -46,6 +49,6 @@ PARTITIONED BY
 STORED AS ORC;
 
 -- CREATE TABLE IF NOT EXISTS
---     `rds_posflow.bl_flow_by_week`
+--     `${hivevar:MAIN_DB}.bl_flow_by_week`
 -- LIKE
---     `deprecated_db.bl_flow_by_week_01`;
+--     `${hivevar:TEMP_DB}.bl_flow_by_week_01`;

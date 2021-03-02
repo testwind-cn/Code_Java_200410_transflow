@@ -1,6 +1,9 @@
-DROP TABLE IF EXISTS `deprecated_db.bl_flow_by_week_01`;
+SET hivevar:MAIN_DB=rds_posflow;
+SET hivevar:TEMP_DB=deprecated_db;
 
-CREATE TABLE IF NOT EXISTS `deprecated_db.bl_flow_by_week_01`(
+DROP TABLE IF EXISTS `${hivevar:TEMP_DB}.bl_flow_by_week_01`;
+
+CREATE TABLE IF NOT EXISTS `${hivevar:TEMP_DB}.bl_flow_by_week_01`(
     mcht_cd                     string
     ,agt_type                   string
     ,product_name1              string
@@ -21,6 +24,6 @@ PARTITIONED BY
 STORED AS ORC;
 
 CREATE TABLE IF NOT EXISTS
-    `rds_posflow.bl_flow_by_week`
+    `${hivevar:MAIN_DB}.bl_flow_by_week`
 LIKE
-    `deprecated_db.bl_flow_by_week_01`;
+    `${hivevar:TEMP_DB}.bl_flow_by_week_01`;

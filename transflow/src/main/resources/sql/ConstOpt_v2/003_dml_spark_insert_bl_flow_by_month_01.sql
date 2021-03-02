@@ -1,4 +1,7 @@
-INSERT OVERWRITE TABLE deprecated_db.bl_flow_by_month_01
+SET hivevar:MAIN_DB=rds_posflow;
+SET hivevar:TEMP_DB=deprecated_db;
+
+INSERT OVERWRITE TABLE ${hivevar:TEMP_DB}.bl_flow_by_month_01
     PARTITION (inst_date)
 SELECT
     mcht_cd
@@ -135,7 +138,7 @@ SELECT
 
     ,to_date(date_format(inst_date,'yyyy-MM-01'))                          as inst_date
 from
-    rds_posflow.bl_flow_by_day
+    ${hivevar:MAIN_DB}.bl_flow_by_day
 WHERE
 --  (inst_date >= '2017-11-01' and inst_date < '2017-12-01' )
 -- 开始日期的当月的1号，结尾日期前一天的下月1号

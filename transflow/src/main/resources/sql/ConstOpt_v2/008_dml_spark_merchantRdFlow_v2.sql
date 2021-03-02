@@ -1,3 +1,6 @@
+SET hivevar:MAIN_DB=rds_posflow;
+SET hivevar:TEMP_DB=deprecated_db;
+
 INSERT OVERWRITE TABLE dm_unify.merchant_rd_flow_v2
     PARTITION (create_time)
 SELECT
@@ -173,7 +176,7 @@ FROM
         ,amt_9W_8   AS amt_8W_8
         ,amt_9W_9   AS amt_8W_9
     from
-        rds_posflow.bl_flow_indicator
+        ${hivevar:MAIN_DB}.bl_flow_indicator
     where
         inst_date = '${1}'
 

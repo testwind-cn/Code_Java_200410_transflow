@@ -1,3 +1,6 @@
+SET hivevar:MAIN_DB=rds_posflow;
+SET hivevar:TEMP_DB=deprecated_db;
+
 set mapreduce.map.memory.mb=4096;
 set mapreduce.reduce.memory.mb=4096;
 SET hive.exec.dynamic.partition=true;
@@ -16,7 +19,7 @@ set mapred.max.split.size=1024000000;
 set mapred.min.split.size.per.node=768000000;
 set mapred.min.split.size.per.rack=768000000;
 
-INSERT OVERWRITE TABLE rds_posflow.bl_total_transflow_v2
+INSERT OVERWRITE TABLE ${hivevar:MAIN_DB}.bl_total_transflow_v2
     PARTITION (inst_date)
 SELECT
     sn,
@@ -57,6 +60,6 @@ SELECT
     create_time,
     create_user,
     inst_date
-from deprecated_db.bl_total_transflow_v2_01
+from ${hivevar:TEMP_DB}.bl_total_transflow_v2_01
     where inst_date >= to_date('${1}') and inst_date< to_date('${2}')
 ;

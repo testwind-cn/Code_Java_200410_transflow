@@ -1,4 +1,7 @@
-INSERT OVERWRITE TABLE rds_posflow.bl_flow_by_week_aif
+SET hivevar:MAIN_DB=rds_posflow;
+SET hivevar:TEMP_DB=deprecated_db;
+
+INSERT OVERWRITE TABLE ${hivevar:MAIN_DB}.bl_flow_by_week_aif
     PARTITION (p_week, inst_date)
 select
     mcht_cd
@@ -37,7 +40,7 @@ from
             WHEN inst_date >= date_sub(current_date(),77-1) AND inst_date < date_sub(current_date(),70-1) THEN date_sub(current_date(),77-1)
             WHEN inst_date >= date_sub(current_date(),84-1) AND inst_date < date_sub(current_date(),77-1) THEN date_sub(current_date(),84-1)
         END AS p_inst_date
-    from rds_posflow.bl_flow_by_day
+    from ${hivevar:MAIN_DB}.bl_flow_by_day
     where
         inst_date >= date_sub(current_date(),84-1) AND inst_date < date_sub(current_date(), 0-1)
 ) t1

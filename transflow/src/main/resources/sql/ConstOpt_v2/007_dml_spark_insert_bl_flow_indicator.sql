@@ -1,4 +1,7 @@
-INSERT OVERWRITE TABLE rds_posflow.bl_flow_indicator
+SET hivevar:MAIN_DB=rds_posflow;
+SET hivevar:TEMP_DB=deprecated_db;
+
+INSERT OVERWRITE TABLE ${hivevar:MAIN_DB}.bl_flow_indicator
     PARTITION (inst_date)
 SELECT
     t_month.mcht_cd
@@ -73,7 +76,7 @@ FROM
         ,MAX(CASE WHEN inst_date >= date_sub('${1}', 30) AND inst_date < date_sub('${1}',  0) THEN active_day    ELSE 0 END) AS active_days_1M
 
     FROM
-        rds_posflow.bl_flow_by_30day
+        ${hivevar:MAIN_DB}.bl_flow_by_30day
     where
         p_day = datediff('${1}','2000-01-02') % 30 AND
         inst_date <  date_sub('${1}', 0) AND
@@ -95,7 +98,7 @@ LEFT JOIN
         SUM(CASE WHEN inst_date >= date_sub(date_add('${1}',1),  56) AND inst_date < date_sub(date_add('${1}',1),49) THEN flow_amt_sell ELSE 0 END) AS amt_9W_8,
         SUM(CASE WHEN inst_date >= date_sub(date_add('${1}',1),  63) AND inst_date < date_sub(date_add('${1}',1),56) THEN flow_amt_sell ELSE 0 END) AS amt_9W_9
     FROM
-        rds_posflow.bl_flow_by_week
+        ${hivevar:MAIN_DB}.bl_flow_by_week
     where
         p_week = datediff(date_add('${1}',1),'2000-01-02') % 7 AND
         inst_date <  date_sub(date_add('${1}',1), 0) AND

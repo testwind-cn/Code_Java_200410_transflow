@@ -1,3 +1,6 @@
+SET hivevar:MAIN_DB=rds_posflow;
+SET hivevar:TEMP_DB=deprecated_db;
+
 set mapreduce.map.memory.mb=4096;
 set mapreduce.reduce.memory.mb=4096;
 SET hive.exec.dynamic.partition=true;
@@ -16,7 +19,7 @@ set mapred.max.split.size=1024000000;
 set mapred.min.split.size.per.node=768000000;
 set mapred.min.split.size.per.rack=768000000;
 
-INSERT OVERWRITE TABLE rds_posflow.bl_flow_by_week
+INSERT OVERWRITE TABLE ${hivevar:MAIN_DB}.bl_flow_by_week
     PARTITION (p_week,inst_date)
 SELECT
     mcht_cd
@@ -34,7 +37,7 @@ SELECT
     ,p_week
     ,inst_date
 from
-    deprecated_db.bl_flow_by_week_01
+    ${hivevar:TEMP_DB}.bl_flow_by_week_01
 WHERE
     p_week = datediff('${2}','2000-01-02') % 7 and
     inst_date <  date_sub('${2}', 0) AND
